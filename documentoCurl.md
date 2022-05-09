@@ -76,5 +76,54 @@ Abaixo, mostramos um exemplo disso:
 - Curl também pode ser usado quando há um proxy server. Se você está atrás de um proxy server listado no portão 8090 de sampleproxy.com, por exemplo, faça download dos arquivos como mostra abaixo:
     > curl -x  sampleproxy.com:8090 -U username:password -O http:// testdomain.com/testfile.tar.gz 
     
+- Uma solicitação típica de HTTP sempre vai ter um cabeçalho. O cabeçalho do HTTP envia as informações adicionais sobre o servidor remoto junto com a solicitação atual. Mesmo que através de uma ferramenta de navegador do desenvolvedor você possa verificar a informação, também pode fazê-lo usando uma url de comando.
 
+Abaixo está um exemplo de como recuperar informações de um site.
+
+> curl -I www.testdomain.com
+
+#### Usando curl, você pode fazer um GET e um POST request. A GET request será como abaixo:
+
+> curl http://mydomain.com
+
+#### Um POST request será como mostramos aqui:
+
+> curl –data “text=Hello” https://myDomain.com/firstPage.jsp
+
+- No text=Hello está parâmetro de POST request. este comportamento será similar aos formulários HTML.
+
+_Você também pode especificar métodos múltiplos de HTTP em um único comando curl. Faça isso usando a opção –next, como esta:_
+
+- _curl –data “text=Hello” https://myDomain.com/firstPage.jsp --next https://myDomain.com/displayResult.jsp
+
+## Aqui, há um exemplo de POST request seguido por um GET request.
+
+- Toda solicitação HTTP terá um agente usuário que é enviado como parte da solicitação. Isto indica que os detalhes do navegador do cliente. Por padrão, uma solicitação curl contém o curl e detalhes do número da versão do agente usuário. A saída é como mostramos abaixo:
+
+> “GET / HTTP/1.1” 200 “_” ”curl/7/29/0”
+
+Você pode alterar esta informação de agente de usuário padrão usando o comando abaixo:
+
+>curl -I http://mydomain.com –-user-agent “My new Browser”
+
+Agora a saída alterada será:
+
+> “GET / HTTP/1.1” 200 “_” ”My new Browser”_
+
+### Limitando Saídas Curl
+- Ao usar curl você não pode saber o tamanho das saídas. Você pode restringir a largura de banda para garantir que não será esmagado pelo curl.
+
+- O comando abaixo restringe a largura de banda em 100K:
+
+> curl --limit-rate 100K http://testdomain.com/samplefile.tar.gz -O
+
+## Resumo 
+
+- Curl é um comando inteligente e poderoso. É muito útil quando você depende de linhas de comando. Ele tem diversas opções e suporta protocolos múltiplos. Esta é uma ótima razão para aprender este comando.
+
+- Lembre-se, se você quer aprender comandos avançados, simplesmente consulte o manual que deve estar presente em todas as versões Unix.
+
+> man curl
+
+Espero que este tutorial seja um bom começo para você usar o Curl.
 
