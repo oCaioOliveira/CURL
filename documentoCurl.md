@@ -20,7 +20,7 @@
 ### Começando a trabalhar
 
 - Antes de tudo é necessário fazer login na VPS
-- Em seguida é necessário verifiicar a verção atual do Curl usando o seguinte comando:
+- Em seguida é necessário verifiicar a versão atual do Curl usando o seguinte comando:
 > curl --version
 >
 > Obteremos o retorno da verção do curl com a lista de protocolos utilizados
