@@ -242,7 +242,7 @@ Espero que este tutorial seja um bom começo para você usar o Curl.
     "id": 501
 >}
 
-- A opção -H permite adicionar um cabeçalho e a -d permite passar os dados da requisição. Nesse caso, definimos que o conteúdo é no formato JSON e passamos o conteúdo da requisição que será usado para criar uma conta. Podemos ver no resultado que o status foi 201, indicando que um novo recurso foi criado.
+- A opção -H permite adicionar uma header e a -d permite passar os dados da requisição. Nesse caso, definimos que o conteúdo é no formato JSON e passamos o conteúdo da requisição que será usado para criar uma conta. Podemos ver no resultado que o status foi 201, indicando que um novo recurso foi criado.
 
 ##  CURL Cookie
 
@@ -257,13 +257,54 @@ Abaixo você vê um exemplo do comando:
 >curl --cookie Mycookies.txt https://www.siteTeste.com
 
 ## -A ou --user-agent
+
+-  O protocolo -A serve para especificar o user agent como uma string a ser enviada para o servidor http.
+- Se o argumento utilizado junto com o comando for vazio ("") ele vai remover completamente o header que viria do request, caso essa não seja a necessidade basta apenas enviar um espaço no argumento (" ")
+
+>curl -A "Fulano" https://Teste.com  
+>curl -A "" https://Teste.com -> remover o header  
+>curl -A " " https://Teste.com -> ainda com o header porém o header vazio
+
 ## -H ou --header
+
+- É utilizado para adicionar uma ou mais headers extras ao enviar para o servidor http, podem ser adicionados qualquer número de headers extras porém se uma header que foi enviada pelo usúario tiver o mesmo nome que uma header interna ja utilizada pelo curl ele dará preferencia para a header personalizada enviada pelo usuário, assim sendo podemos realizar operações mais complexas contanto que estaja perfeitamente correto **não se deve substuir uma header definida internamente sem saber perfeitamente o que está acontecendo**
+- Para remover uma header interna basta dar uma substituição sem conteúdo no lado direito dos : 
+
+> curl -H "Host:" https://Teste.com
+
+- Se o interesse for envia uma header personalizada sem valor ela deverá ser encerrada com ; 
+
+> curl -H "X-headerPersonalizada;"
+
+- Exemplos: 
+
+> curl -H "X-Nome:Fulano" https://Teste.com  
+> curl -H "User-Agent: exemplo-teste/2000" https://Teste.com  
+> curl -H "Host:" https://Teste.com
+>
+
+## -u ou --user
+- Tem a funcionalidade de especificar um usuário e senha a serem verificados pela autenticação do servidor 
+- as informações são enviadas no formato:
+> curl -u usuario:senha https://teste.com
+- Note que o usuário é separado da senha por meio da utilização do ' : ' ou seja não pode existir um : no nome de usuário 
+
 ## -X ou --request
+
+- É utilizado para enviar um request personalizada para o servidor http, o método especificado será utilizado no lugar do método padrão que é o GET.
+- Normalmente não é necessária a utilização deste comando, uma vez que outras solicitações como GET, HEAD, POST ou PUT já possuem opções de comando dedicadas.
+- Utilizando o -X teremos uma alteração apenas na palavra utilizada para o request no http, em suma ele não via aterar como o curl funciona então utilizando o exemplo do HEAD se for necessário utilizar o -X o correto não seria -X HEAD mas sim -X --head.
+- **Cuidado pois uma vez que uma string for definida para o método de request ela será utilizada para todas as solicitações seguintes, por exemplo ao utilizar o --location poderam existir efeitos não desejados ja que o curl utilizará o método personalizado e não alterará o método de request de acordo com os códigos de resposta do http.**
+
+>curl -X "DELETE" https://Teste.com  
+>curl -X NLST ftp://Teste.com/
+
 ## -data-binary
 ## -data-urlencode
 ## -c ou --cookie-jar
 ## -m ou --max-time
 ## -b ou --cookie
+## -T ou --upload-file
 
 
 
