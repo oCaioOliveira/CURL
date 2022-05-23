@@ -347,7 +347,20 @@ Abaixo você vê um exemplo do comando:
 >curl --max-time 2.92 https://Teste.com
 
 ## -b ou --cookie
+- O comando curl para cookies podem ser usados para verificar quais os cookies são baixados em qualquer URL, acessando uma URL qualquer é possível salvar/imprimir os cookies em um arquivo e acessá-los usando um editor. Segue um comando exemplo, onde o arquivo é exemplificado pelo "Mycookies.txt", seguido pelo site e o comando para salvar:
+    ```
+    curl --cookie-jar Mycookies.txt https://www.exemplodesite.com /index.html -O
+    ```
+- É possível enviar cookies para um site caso estes já estejam salvos em um arquivo, segue comando exemplo, seguindo o mesmo padrão do exemplo anterior:
+    ```
+    curl --cookie Mycookies.txt https://www.exemplodesite.com
+    ```
+    
 ## -T ou --upload-file
+- O comando para FTP -T funciona para subir um arquivo usando o comando exemplo a seguir, onde  é passado um parâmetro de usuário e senha e logo em seguida o comando para fazer upload, seguido do arquivo e do servidor:
+    ```
+    curl -u username:password -T testfile.tar.gz ftp://servidorexemplo
+    ```
 
 
 
