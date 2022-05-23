@@ -300,9 +300,52 @@ Abaixo você vê um exemplo do comando:
 >curl -X NLST ftp://Teste.com/
 
 ## -data-binary
-## -data-urlencode
+- É utilizado para postar dados exatamente como especificado, ou seja dados puramente binários.
+- Os dados são postados de maneira semelhante ao --data(Ele envia os dados especificados numa solicitação POST para o servidor HTTP, do mesmo jeito que o navegador faz quando um usuário preenche um formulário HTML e pressiona o botão enviar.), exceto que as novas linhas e os retornos de carro são preservados e as conversões nunca são feitas.
+- Se esta opção for usada várias vezes, as que seguem a primeira anexarão dados conforme descrito em -d, --data(especificado acima).
+- Iniciar os dados com a letra @ seguido pelo nome de arquivo.
+
+>curl --data-binary @filename https://Teste.com
+
+## -data-urlencode <data>
+- É utilizado para publicar os dados semelhantes as outras opções do comando '--data', porém ele apena codificar em URL o valor de um campo de formulário.
+- Para ser compatível com CGI, a parte <data> deve começar com um nome seguido por um separador e uma especificação de conteúdo. No local de <data> pode passar para o curl usando uma das seguintes sintaxes:
+    - *content*
+        - Fará com que o conteúdo codifique a URL do curl e o transmita. 
+            *Cuidado para que o conteúdo não contenha nenhum símbolo '=' ou '@',pois isso fará com que a sintaxe corresponda a um dos outros casos abaixo!*
+    - *=content*
+        - Fará com que o conteúdo codifique a URL do curl e o transmita. Porém a precedência do símbolo '=' não está incluído nos dados.
+    - *nome=content*
+        - Fará com que a URL codifica a parte do 'conteúdo' e a transmita. A parte do nome deve estar codificada em URL.
+    - *@filename*
+        - Fará com que o curl carregue os dados do arquivo fornecido (incluindo quaisquer novas linhas), depois codifique em URL esses mesmos dados e os transmita no             método POST.
+    - *name@filename*
+        - Fará com que o curl carregue os dados do arquivo fornecido (do mesmo jeito do anterior), codificando após em URL e transmitindo no POST. A parte do nome               recebe um sinal de igual anexado, resultando em name=urlencoded-file-content . Observe que o nome já deve ser codificado em URL.
+    
+>curl --data-urlencode name=val https://Teste.com
+>curl --data-urlencode =encodethis https://Teste.com
+>curl --data-urlencode name@file https://Teste.com
+>curl --data-urlencode @fileonly https://Teste.com 
+ 
 ## -c ou --cookie-jar
+- Utilizado para especificar em qual arquivo você deseja que o curl grave todos os cookies após uma operação concluída. Ele grava todos os cookies do armazenamento na memória para o arquivo fornecido no final das operações. Se nenhum cookie for conhecido, nenhum dado será gravado. 
+- O arquivo será gravado usando o formato de arquivo de cookie Netscape. Se você definir o nome do arquivo para um único traço, "-", os cookies serão gravados em stdout.
+- Outra maneira de ativá-lo é usando a opção --cookie, que faz o registro de curl e usa cookies.
+- Se o cookie jar não puder ser criado ou gravado, toda a operação de curl não falhará ou até mesmo relatará um erro claramente. 
+- Usando --verbose exibirá um aviso, esse é o único feedback visível que obterá sobre a situação possivelmente falha.
+- Se esse comando for usada várias vezes, apenas o último nome de arquivo especificado será usado.
+- O comando '-b' executa a leitura do http após ter gravado os dados de cookies.Passe os dados para o servidor HTTP no cabeçalho Cookie.
+    
+>curl -c dados-teste.txt https://Teste.com 
+>curl -c dados-teste.txt -b leia-este https://Teste.com
+  
 ## -m ou --max-time
+- É o tempo máximo em segundos que você permite que toda a operação demore. Útil para evitar que seus trabalhos em lote fiquem suspensos por horas devido a redes lentas ou links inativos. 
+- Esse comando aceita valores decimais, porém o tempo limite real diminuirá em precisão à medida que o tempo limite especificado aumentar em precisão decimal.
+
+>curl --max-time 10 https://Teste.com 
+>curl --max-time 2.92 https://Teste.com
+
 ## -b ou --cookie
 ## -T ou --upload-file
 
