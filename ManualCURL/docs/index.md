@@ -360,6 +360,7 @@ Abaixo você vê um exemplo do comando:
 - O comando para FTP -T funciona para subir um arquivo usando o comando exemplo a seguir, onde  é passado um parâmetro de usuário e senha e logo em seguida o comando para fazer upload, seguido do arquivo e do servidor:
     ```
     curl -u username:password -T testfile.tar.gz ftp://servidorexemplo
+    ```
     
 ## -d ou --data 
 
